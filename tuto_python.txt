@@ -1,0 +1,7 @@
+anaconda 包含python以及有用的包含python以及有用的库
+
+地址 
+官网 https://www.anaconda.com/distribution/
+ 下载安装anaconda  
+
+	 

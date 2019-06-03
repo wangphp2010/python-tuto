@@ -1,0 +1,26 @@
+ 
+
+	conda list 显示已安装的包
+	
+	anaconda search -t conda tensorflow # 搜索 tensorflow 包
+	anaconda show jjhelmun/tensorflow   # 获得这个包jjhelmun/tensorflow  的安装指令
+	
+	jupyter notebook --generate-config # 生成 jupyter notebook 配置文件
+	
+		cd C:/Users/user/Desktop/python
+		jupyter notebook 在C:/Users/user/Desktop/python路径打开
+		
+		在当前位置打开jupyter notebook
+		rem -- start_ipython_notebook_here.bat ---
+		dir
+		ipython notebook
+		pause
+		就是新建一个txt文件，然后把上面的内容复制进去，然后另存为
+        .bat 文件，然后把它放在你想打开文件的位置，使用时双击就好，异常方便啊
+		
+
+
+	
+			
+			 
+ 
