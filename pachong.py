@@ -110,9 +110,9 @@ soup.select('.class a')
 '''
 
  
-max = 5 
+max = 1 
 catId = "21"
-isTest = 1 # 是否测试
+isTest = 0  # 是否测试
 
 
 if 1 == isTest:
@@ -140,17 +140,18 @@ for i in range(1, max + 1 ): # 会 1 到 max
 	 
 		
 
-	preg_l = '' ;
-	preg_l += '([a-zA-Z][a-zA-Z0-9]+\-[a-zA-Z0-9]+\d+)';
-	preg_l +='|((Tokyo Hot\s*)((\d*[a-zA-Z0-9]+\-\d+)|([a-zA-Z][0-9]+)))';
-	preg_l +='|(^[a-zA-Z0-9]+\s\d+\-[a-zA-Z]+\d+)';
-	preg_l +='|(S-Cute[\w\s\-\_]+)';
+	preg_l = '' 
+	preg_l += '([a-zA-Z][a-zA-Z0-9]+\-[a-zA-Z0-9]+\d+)'
+	preg_l +='|((Tokyo Hot\s*)((\d*[a-zA-Z0-9]+\-\d+)|([a-zA-Z][0-9]+)))'
+	preg_l +='|(^[a-zA-Z0-9]+\s\d+\-[a-zA-Z]+\d+)'
+	preg_l +='|(S-Cute[\w\s\-\_]+)'
 		
 	 
 				
 
 				
 				
+	count = 0 
 	for section in sections :
 
 		img = section.img['src'].strip()
@@ -174,22 +175,28 @@ for i in range(1, max + 1 ): # 会 1 到 max
 				strCat += strCat2[0]
 				    
 				
-			
-			
-			
 			catId = getCatId(strCat)
 
 			
-			 
-		fanhao = re.sub( r"preg_l", '', title ).strip()
+		
+		
+		fanhao = re.search( preg_l,   title ) .group().strip()
+		 
 		title = title.replace( fanhao , "" ).strip()
 		
 								
 		if not re.search( r"\-" , fanhao ) :
-			fanhao = re.sub( r"([a-zA-Z])(\d)" ,"$1-$2" ,  fanhao ) ; 
+			fanhao = re.sub( r"([a-zA-Z])(\d)" ,"$1-$2" ,  fanhao ) 
+		 
 		
 		title = fanhao +" "+ title  
 		title = title.strip()
+		
+		'''
+		count = count + 1 
+		if count >= 10 :
+			break 
+		'''
 		 
 		if  'fanhao' in locals().keys() and fanhao :   # 'fanhao' in locals().keys() 是否定义
 			javlibraryurl = 'http://www.javlibrary.com/tw/vl_searchbyid.php?keyword=' + fanhao 
