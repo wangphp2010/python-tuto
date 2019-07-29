@@ -7,9 +7,9 @@ flask
 
 安装 
 
-```
+```python
 pip install -r requirements.txt
-// or
+# or
 pip install flask
 
 ```
@@ -31,9 +31,9 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=3000) 
-//  app.run() 
-// 写app.run(debug=True) 时修改完代码刷新页面就行,否则需要重新启动app.py再刷新页面
-// 只有设为host='0.0.0.0'时其他机器才可以访问到
+#  app.run() 
+# 写app.run(debug=True) 时修改完代码刷新页面就行,否则需要重新启动app.py再刷新页面
+# 只有设为host='0.0.0.0'时其他机器才可以访问到
 
 
 ```
@@ -117,7 +117,7 @@ index.html 里用的 是和 twig 相似的语法
 ## 模板继承和引用
 
 
-navbar.html
+templates/navbar.html
 
 ```html
 
@@ -128,7 +128,7 @@ navbar.html
 
 
 
-base.html
+templates/base.html
 
 ```html
 
@@ -165,7 +165,7 @@ base.html
 
 ```
 
-index.html
+templates/index.html
 
 ```html
 {% extends 'base.html' %}
@@ -188,8 +188,117 @@ index.html
 
 
 ## 利用 flask bootstrap 来优化布局 
-https://www.youtube.com/watch?v=FenI_wYBfJs&list=PLDFBYdF-BxV1G4FBpG1EMyFtbsbZuJOvD&index=6
+
+requirements.txt 
+
+...
+    +flask-bootstrap
+...
+
+app.py
+...
+    +from flask_bootstrap import Bootstrap
+    +bootstrap = Bootstrap(app)
+...
+
+base.hml
+...
+{% extends 'bootstrap/base.html' %}
+...
+
+或者直接载入
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 
+ 
+
+## flask-sqlalchemy 简介和创建用户模型
+
+requirements.txt
+```txt
+    +flask-sqlalchemy
+
+```
+
+```bash
+$ pip install flask-sqlalchemy
+```
+
+app.py
+
+```python
+    +from flask_sqlalchemy import SQLAlchemy
+    +from config import Config
+    +db = SQLAlchemy(app)
+    +app.config.from_object(Config)
+```
+
+config.py
+
+```python
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config(object):
+    # Database configuration
+    # os.environ.get('DATABASE_URL') 从环境变量里获取DATABASE_URL 如果没有 则: 'sqlite:///' + os.path.join(basedir , 'app.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir , 'app.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False 
+
+
+```
+
+models.py
+```python
+from app import db 
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120),    nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+```
+
+### 测试一下
+
+```bash
+$ python
+
+>>>
+    from models import db
+    db.reate_all()
+    from models import User
+    User.query.all()#查找所有user 返回[]
+    user = User(username='Jack', password='pwd' , email="example@example.com") # 准备数据
+
+    #插入数据
+    db.session.add(user)
+    db.session.commit() # 加commit 确认操作
+
+    #查看数据
+    User.query.all() # [<User 'Jack'>]
+
+    u = User.query.all()
+    u = u[0]
+    u.username
+    u.email
+    u.password
+
+    User.query.delete() #清空数据
+    User.query.all()
+    db.session.commit()
+
+```
+
+
+## 利用 Flask WTF 来创建用户注册表单
+
+https://www.youtube.com/watch?v=6XPxQKdBySU&list=PLDFBYdF-BxV1G4FBpG1EMyFtbsbZuJOvD&index=8
 
 
