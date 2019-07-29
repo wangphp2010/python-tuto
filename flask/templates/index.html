@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {{ super() }}
+    <h1 style="color:red">hello world</h1>
+    <p>i love flask </p>
+    <p>{{pp}}</p>
+
+    {% for p in  paragraphs %}
+        <p>{{p}}</p>
+    {% endfor %}
+
+    {% block content %}
+    {{ super() }}
+    {% endblock %}
+
+{% endblock %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if   title    %}
+
+    {% else %}
+        {% set title = 'this is default title '%}
+    {% endif %}
+    <title>{{ title }}</title>
+</head>
+
+<body>
+
+    <h1 style="color:red">hello world</h1>
+    <p>i love flask </p>
+    <p>{{pp}}</p>
+
+    {% for p in  paragraphs %}
+        <p>{{p}}</p>
+    {% endfor %}
+
+</body>
+
+</html> -->

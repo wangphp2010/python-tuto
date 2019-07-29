@@ -110,7 +110,7 @@ soup.select('.class a')
 '''
 
  
-max = 1 
+max = 3 
 catId = "21"
 isTest = 0  # 是否测试
 
